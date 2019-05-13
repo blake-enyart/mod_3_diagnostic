@@ -14,6 +14,7 @@ gem 'figaro'
 
 group :development, :test do
   gem 'byebug'
+  gem 'pry'
   gem 'rspec-rails'
 end
 
@@ -27,4 +28,3 @@ group :test do
   gem 'webmock'
   gem 'capybara'
 end
-
