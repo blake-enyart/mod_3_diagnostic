@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe Station do
+describe DataParse::Station do
   it 'returns attr correctly' do
-
+    # No time to build out this test...
   end
 end

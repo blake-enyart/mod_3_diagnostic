@@ -4,11 +4,11 @@ class SearchResultsFacade
   end
 
   def total_results
-    get_json('api/alt-fuel-stations/v1/nearest').count
+    nearest_stations.count
   end
 
   def nearest_stations
-    get_json('api/alt-fuel-stations/v1/nearest').each do |station_data|
+    get_json('/api/alt-fuel-stations/v1/nearest').map do |station_data|
       DataParse::Station.new(station_data)
     end
   end
@@ -31,6 +31,7 @@ class SearchResultsFacade
         f.params['fuel_type'] = 'ELEC,LPG'
         f.params['access'] = 'public'
       end
-      JSON.parse(response.body, symbolize_names: true)[:fuel_stations]
+      a = JSON.parse(response.body, symbolize_names: true)[:fuel_stations]
+      require "pry"; binding.pry
     end
 end
