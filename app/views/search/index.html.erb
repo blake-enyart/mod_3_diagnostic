@@ -3,12 +3,14 @@
 <section class='nearest-stations'>
 <h3>Nearest Stations</h3>
 <%= facade.nearest_stations.each do |station| %>
-  <%= station.name %>
-  Address:<br>
-  <%= station.address %><br>
-  Fuel Types: <%= station.fuel_types %><br>
-  Distance: <%= station.distance_from_location %><br>
-  Availability: <%= station.availability %><br>
+  <section class='nearest-station'>
+    <%= station.name %>
+    Address:<br>
+    <%= station.address %><br>
+    Fuel Types: <%= station.fuel_types %><br>
+    Distance: <%= station.distance_from_location %><br>
+    Availability: <%= station.availability %><br>
+  </section>
 <% end %>
 
 </section>
