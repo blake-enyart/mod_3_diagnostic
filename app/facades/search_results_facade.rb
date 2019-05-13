@@ -8,16 +8,20 @@ class SearchResultsFacade
   end
 
   def nearest_stations
-    conn = Faraday.new(url: 'https://api/alt-fuel-stations/v1') do |f|
+    # require "pry"; binding.pry
+    conn = Faraday.new(url: 'https://developer.nrel.gov/api/alt-fuel-stations/v1') do |f|
       f.params['format'] = 'json'
       f.params['api_key'] = ENV['nrel_api_key']
       f.params['location'] = @location
-      f.params['fuel_type'] = ['ELEC', 'LPG']
+      f.params['fuel_type'] = 'ELEC,LPG'
       f.params['status'] = 'E'
       f.adapter  Faraday.default_adapter
     end
 
-    response = conn.get
+    response = conn.get('/nearest')
     require "pry"; binding.pry
+
+    data = JSON.parse(response.body, symbolize_names: true)
+
   end
 end
