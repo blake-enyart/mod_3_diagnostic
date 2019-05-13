@@ -11,7 +11,7 @@ feature 'User can search based on zipcode' do
       expect(current_path).to eq('/search')
       expect(current_url).to include('=80206')
 
-      expected_results = 90
+      expected_results = 93
       expect(page).to have_content("Total Results: #{expected_results}")
 
       expect(page).to have_css('.nearest-stations', text: 'Nearest Stations')
