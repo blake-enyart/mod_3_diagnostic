@@ -4,24 +4,33 @@ class SearchResultsFacade
   end
 
   def total_results
-
+    get_json('api/alt-fuel-stations/v1/nearest').count
   end
 
   def nearest_stations
-    conn = Faraday.new('https://developer.nrel.gov') do |f|
-      f.params['format'] = 'json'
-      f.params['api_key'] = ENV['nrel_api_key']
-      f.params['location'] = @location
-      f.params['status'] = 'E'
-      f.adapter Faraday.default_adapter
+    get_json('api/alt-fuel-stations/v1/nearest').each do |station_data|
+      DataParse::Station.new(station_data)
     end
-
-    response = conn.get do |f|
-      f.url 'api/alt-fuel-stations/v1/nearest'
-      f.params['fuel_type'] = 'ELEC,LPG'
-      f.params['access'] = 'public'
-    end
-
-    data = JSON.parse(response.body, symbolize_names: true)
   end
+
+  private
+
+    def conn
+      Faraday.new('https://developer.nrel.gov') do |f|
+        f.params['format'] = 'json'
+        f.params['api_key'] = ENV['nrel_api_key']
+        f.params['location'] = @location
+        f.params['status'] = 'E'
+        f.adapter Faraday.default_adapter
+      end
+    end
+
+    def get_json(url)
+      response = conn.get do |f|
+        f.url url
+        f.params['fuel_type'] = 'ELEC,LPG'
+        f.params['access'] = 'public'
+      end
+      JSON.parse(response.body, symbolize_names: true)[:fuel_stations]
+    end
 end
