@@ -1,0 +1,14 @@
+<h1>Total Results: <%= facade.total_results %></h1>
+
+<section class='nearest-stations'>
+<h3>Nearest Stations</h3>
+<%= facade.nearest_stations.each do |station| %>
+  <%= station.name %>
+  Address:<br>
+  <%= station.address %><br>
+  Fuel Types: <%= station.fuel_types %><br>
+  Distance: <%= station.distance_from_location %><br>
+  Availability: <%= station.availability %><br>
+<% end %>
+
+</section>
