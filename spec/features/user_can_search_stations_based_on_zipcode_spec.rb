@@ -5,7 +5,7 @@ feature 'User can search based on zipcode' do
     it 'returns public electric/propane stations with 15 closest stations' do
       visit "/"
 
-      fill_in ?, '80206'
+      fill_in 'location', with: '80206'
       click_on 'Locate'
 
       expect(current_path).to eq('/search')
